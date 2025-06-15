@@ -1,0 +1,30 @@
+# Unity Generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild*/
+UserSettings/
+MemoryCaptures/
+Logs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# OS Junk
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
