@@ -55,16 +55,17 @@ public class DebrisManager : MonoBehaviour
             Debug.LogError("WinMessage not assigned!");
         }
 
-        foreach (GameObject debris in debrisPool)
-        {
-            Vector3 direction = Random.insideUnitSphere.normalized;
-            float distance = Random.Range(minDistance, maxDistance);
-            Vector3 position = player != null ? player.transform.position + direction * distance : direction * distance;
-            debris.transform.position = position;
-            debris.transform.rotation = Random.rotation;
-            debris.SetActive(true);
-        }
-        UpdateCountText();
+        // foreach (GameObject debris in debrisPool)
+        // {
+        //     Vector3 direction = Random.insideUnitSphere.normalized;
+        //     float distance = Random.Range(minDistance, maxDistance);
+        //     Vector3 position = player != null ? player.transform.position + direction * distance : direction * distance;
+        //     debris.transform.position = position;
+        //     debris.transform.rotation = Random.rotation;
+        //     debris.SetActive(true);
+        // }
+        // UpdateCountText();
+        SpawnSector();
     }
 
     public void DebrisZapped(GameObject debris)
@@ -90,15 +91,15 @@ public class DebrisManager : MonoBehaviour
         if (winMessage != null) winMessage.SetActive(true);
         if (player != null)
         {
-             player.enabled = false;
-             
-             // --- NEW --- Hide the zap progress bar UI
-             if (player.zapProgress != null)
-             {
+            player.enabled = false;
+
+            // --- NEW --- Hide the zap progress bar UI
+            if (player.zapProgress != null)
+            {
                 player.zapProgress.gameObject.SetActive(false);
-             }
+            }
         }
-        
+
         if (dataLogger != null)
         {
             dataLogger.WriteToFile();
@@ -108,4 +109,32 @@ public class DebrisManager : MonoBehaviour
             Debug.LogWarning("DataLogger not found in scene! Cannot write data to file.");
         }
     }
+    public void SpawnSector()
+    {
+        // Reset counter & UI
+        zappedCount = 0;
+        UpdateCountText();
+
+        // Hide win message & re-enable player
+        if (winMessage != null) winMessage.SetActive(false);
+        if (player != null)
+        {
+            player.enabled = true;
+            if (player.zapProgress != null)
+                player.zapProgress.gameObject.SetActive(true);
+        }
+
+        // Reposition and reactivate every debris in the pool
+        foreach (GameObject debris in debrisPool)
+        {
+            Vector3 dir = Random.insideUnitSphere.normalized;
+            float dist = Random.Range(minDistance, maxDistance);
+            Vector3 origin = (player != null) ? player.transform.position : Vector3.zero;
+
+            debris.transform.position = origin + dir * dist;
+            debris.transform.rotation = Random.rotation;
+            debris.SetActive(true);
+        }
+    }
+    
 }

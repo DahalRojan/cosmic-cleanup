@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5962539412571578323}
   - component: {fileID: 695398334247687925}
   - component: {fileID: 7583880941863888826}
-  - component: {fileID: 3158551877705075011}
+  - component: {fileID: 6848702539896282727}
   m_Layer: 0
   m_Name: ZapEffect
   m_TagString: Untagged
@@ -4834,7 +4834,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3158551877705075011
+--- !u!114 &6848702539896282727
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4843,6 +4843,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3455227551514901700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51016f7b3812e9540bc008c0a39a5eca, type: 3}
+  m_Script: {fileID: 11500000, guid: 96c59b42529006547915df982efcb75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  travelTime: 0.08

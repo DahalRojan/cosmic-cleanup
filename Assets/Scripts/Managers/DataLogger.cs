@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System;
+
 
 public class DataLogger : MonoBehaviour
 {
@@ -51,12 +53,25 @@ public class DataLogger : MonoBehaviour
 
     public async void WriteToFile()
     {
+        // 1) Generate a session ID
+        string sessionID = Guid.NewGuid().ToString();
+
+        // 2) Build the CSV path
         string path = Application.dataPath + "/PlayerData.csv";
+
+        // 3) Do the file I/O on a background thread
         await Task.Run(() =>
         {
+            // 4) Declare 'writer' here, so it's in scope for everything below
             using (StreamWriter writer = new StreamWriter(path))
             {
+                // 5) Write session metadata as first line
+                writer.WriteLine("SessionID," + sessionID);
+
+                // 6) Write your CSV header
                 writer.WriteLine("Time,PosX,PosY,PosZ,RotX,RotY,RotZ,Speed,TotalDistance,MouseDeltaX,MouseDeltaY,RotationalSpeed,Acceleration,HeadSwayAngle,SimAccelX,SimAccelY,SimAccelZ,SimAngVelX,SimAngVelY,SimAngVelZ");
+
+                // 7) Write each logged entry
                 foreach (var entry in logEntries)
                 {
                     writer.WriteLine(
@@ -84,7 +99,10 @@ public class DataLogger : MonoBehaviour
                 }
             }
         });
+
+        // 8) After saving, clear the buffer & log success
         Debug.Log("Data saved to " + path);
         logEntries.Clear();
     }
+
 }
